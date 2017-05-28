@@ -114,23 +114,17 @@ class TracyMiddleware
                 $this->versions
             ));
         }
+        if (isset($cfg['showMormPanel'])) {
+            Debugger::getBar()->addPanel(new \RunTracy\Helpers\MormPanel(db()->log()));
+        }
         if (isset($cfg['showVendorVersionsPanel'])) {
             Debugger::getBar()->addPanel(new \RunTracy\Helpers\VendorVersionsPanel());
         }
-        if (isset($cfg['showXDebugHelper'])) {
-            Debugger::getBar()->addPanel(new \RunTracy\Helpers\XDebugHelper(
-                $this->defcfg['configs']['XDebugHelperIDEKey']
-            ));
-        }
+
         if (isset($cfg['showIncludedFiles'])) {
             Debugger::getBar()->addPanel(new \RunTracy\Helpers\IncludedFiles());
         }
-        // check if enabled or blink if active critical value
-        if (isset($cfg['showConsolePanel']) || $this->defcfg['configs']['ConsoleNoLogin']) {
-            Debugger::getBar()->addPanel(new \RunTracy\Helpers\ConsolePanel(
-                $this->defcfg['configs']
-            ));
-        }
+
         if (isset($cfg['showProfilerPanel'])) {
             Debugger::getBar()->addPanel(new \RunTracy\Helpers\ProfilerPanel(
                 $this->defcfg['configs']['ProfilerPanel']
